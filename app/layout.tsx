@@ -21,7 +21,7 @@ export default function RootLayout({
             <html lang="en">
                 <body className={`${josephineSans.className}`}>
                     <Header />
-                    <main className="mx-10 mb-10">{children}</main>
+                    <main className="mx-6 md:mx-10 mb-10">{children}</main>
                 </body>
             </html>
         </ClerkProvider>

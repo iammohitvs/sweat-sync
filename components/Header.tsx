@@ -17,7 +17,7 @@ const Header = async () => {
     const user = await currentUser();
     return (
         <nav className="w-full flex flex-row justify-between items-center py-5 shadow-sm px-5 md:px-10">
-            <Link href="/homepage">
+            <Link href="/">
                 <Image
                     src="/logo cropped.png"
                     alt="App Logo"
@@ -35,7 +35,6 @@ const Header = async () => {
                     </SignUpButton>
                 </SignedOut>
                 <SignedIn>
-                    <p>Hi there {user?.firstName}</p>
                     <UserButton />
                     <SideNav />
                 </SignedIn>
