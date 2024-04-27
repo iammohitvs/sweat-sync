@@ -1,20 +1,15 @@
 import React from "react";
 import { Button } from "./ui/button";
 import {
-    SignInButton,
-    SignOutButton,
-    SignUpButton,
     SignedIn,
     SignedOut,
     UserButton,
 } from "@clerk/nextjs";
 import SideNav from "./SideNav";
-import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 
 const Header = async () => {
-    const user = await currentUser();
     return (
         <nav className="w-full flex flex-row justify-between items-center py-5 shadow-sm px-5 md:px-10">
             <Link href="/">
@@ -27,12 +22,12 @@ const Header = async () => {
             </Link>
             <div className="flex flex-row fle-end justify-center items-center gap-5">
                 <SignedOut>
-                    <SignInButton>
-                        <Button variant="secondary">Log In</Button>
-                    </SignInButton>
-                    <SignUpButton>
-                        <Button>Sign Up</Button>
-                    </SignUpButton>
+                    <Button variant="secondary">
+                        <Link href="/sign-in">Log In</Link>
+                    </Button>
+                    <Button>
+                        <Link href="/sign-up">Sign Up</Link>
+                    </Button>
                 </SignedOut>
                 <SignedIn>
                     <UserButton />

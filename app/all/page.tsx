@@ -1,8 +1,14 @@
+import { Button } from '@/components/ui/button'
 import React from 'react'
+import { addData } from '../actions'
 
 const SessionsPage = () => {
   return (
-    <div>SessionsPage</div>
+    <form action={addData}>
+      <Button type='submit'>
+        jnefwkewjn
+      </Button>
+    </form>
   )
 }
 
