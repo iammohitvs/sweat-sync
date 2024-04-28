@@ -1,9 +1,57 @@
-import React from 'react'
+import Workoutcard from "@/components/Workoutcard";
+import { Button } from "@/components/ui/button";
+import { currentUser } from "@clerk/nextjs/server";
+import { PlusCircle } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { supabase } from "@/lib/supabase";
 
-const WorkoutsPage = () => {
-  return (
-    <div>WorkoutsPage</div>
-  )
-}
+const getAllWorkouts = async () => {
+    const user = await currentUser();
+    const { data, error } = await supabase
+        .from("workouts")
+        .select("*")
+        .eq("user_id", user?.id);
 
-export default WorkoutsPage
+    if (error)
+        throw new Error(
+            "Something went wrong. Couldnt retreive your workouts."
+        );
+
+    return data;
+};
+
+const WorkoutsPage = async () => {
+    const data = await getAllWorkouts();
+
+    const exercisesObject = {
+        barbellCurl: 4,
+        dumbellPress: 3,
+    };
+
+    return (
+        <section className="my-10" id="workouts-section">
+            <div className="flex flex-row justify-between">
+                <h1 className="text-3xl font-semibold">Your Workouts</h1>
+                <Button asChild className="hover:cursor-pointer">
+                    <Link href="/create">
+                        <PlusCircle size={24} className="mr-2" />
+                        Create Workout
+                    </Link>
+                </Button>
+            </div>
+            <div className="mt-10 grid gris-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                {data.map((workout) => (
+                    <Workoutcard
+                        key={workout.id}
+                        cardTitle={workout.name}
+                        exercises={workout.exercises}
+                        cardDescription={workout.description || null}
+                    />
+                ))}
+            </div>
+        </section>
+    );
+};
+
+export default WorkoutsPage;
