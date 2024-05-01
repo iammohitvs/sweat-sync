@@ -8,13 +8,13 @@ export default function Home() {
     return (
         <section
             id="Hero-section"
-        className="flex flex-col gap-8 md:gap-14 mt-20 items-center"
+        className="flex flex-col gap-8 md:gap-14 mt-10 items-center"
         >
-            <h1 className="text-3xl md:text-6xl text-center max-w-[1000px] font-semibold">
+            <h1 className="text-3xl md:text-6xl text-center max-w-[1000px]">
                 Transform your workouts, track your progress, and conquer your
                 fitness goals with our all-in-one workout companion!
             </h1>
-            <div className="flex flex-col-reverse lg:flex-row-reverse justify-between gap-4 md:gap-20 items-center">
+            <div className="flex flex-col-reverse lg:flex-row-reverse justify-between gap-4 md:gap-20 items-center font-light">
                 <h3 className="text-xl md:text-3xl max-w-[500px] text-slate-600">
                     Elevate your strength journey with SweatSync. Record sets,
                     reps, and crush muscle goals effortlessly. Stay focused,

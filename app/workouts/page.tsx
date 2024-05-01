@@ -24,13 +24,15 @@ const getAllWorkouts = async () => {
 const WorkoutsPage = async () => {
     const data = await getAllWorkouts();
 
-    const exercisesObject = {
-        barbellCurl: 4,
-        dumbellPress: 3,
-    };
+    if (!data.length) return (
+        <h1 className="my-10 mx-auto text-2xl text-primary">
+            No Workouts Found. Go ahead and{" "}
+            <Link href="/create" className="underline">create one</Link>.
+        </h1>
+    );
 
     return (
-        <section className="my-10" id="workouts-section">
+        <section id="workouts-section">
             <div className="flex flex-row justify-between">
                 <h1 className="text-3xl font-semibold">Your Workouts</h1>
                 <Button asChild className="hover:cursor-pointer">
