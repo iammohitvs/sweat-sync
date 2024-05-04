@@ -1,40 +1,55 @@
 "use server";
 
 import { supabase } from "@/lib/supabase";
+import { range } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
 
-export async function addData(formData: FormData) {
+export async function addSession(formData: FormData) {
+    /* const wid = formData.get("wid");
+
+    const exercises = await supabase
+        .from("workouts")
+        .select("exercises")
+        .eq("id", wid);
+
+    let sessionDetails = new Object;
+
+    Object.entries(exercises.data[0].exercises).map(
+        ([exercise, totalSets], index) => {
+            range(1, totalSets + 1).map((value) => {
+                sessionDetails = {
+                    ...sessionDetails,
+                    exercise: [
+                        formData.get(`${exercise}-${value}-weight`),
+                        formData.get(`${exercise}-${value}-weight`),
+                    ],
+                };
+            });
+        }
+    );
+
+    console.log(sessionDetails); */
+}
+
+/* export async function addData(formData: FormData) {
     const user = await currentUser();
 
     const { data, error } = await supabase
         .from("workouts")
-        .insert([
-            {
-                name: "crazy workout workout",
-                description: "some random description",
-                created_at: new Date().toISOString().toLocaleString(),
-                exercises: {
-                    dogPress: 33,
-                    catCurl: 99,
-                    ejjkx2: 78,
-                    "fejnkwnfkjew": 4,
-                    "rhi32h": 3490,
-                },
-                user_id: user?.id,
-            },
-        ])
-        .select();
-
-   /*  const { data, error } = await supabase
-        .from("workouts")
         .select("*")
-        .eq("user_id", user?.id);
+        .eq("id", "23b3101e-8e7a-4121-aaed-f4ad81e961d8");
 
     if (error) {
         console.log(error);
         throw new Error("something went wrong");
-    } */
+    }
+
+    const finalData = Object.entries(data[0].exercises).map(
+        ([weight, reps]) => {
+            console.log(weight, reps);
+        }
+    );
 
     console.log(data);
     return;
-}
+} */

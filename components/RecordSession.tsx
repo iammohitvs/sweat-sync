@@ -1,5 +1,11 @@
 import { supabase } from "@/lib/supabase";
-import React from "react";
+import React, { Suspense } from "react";
+import InputBox from "./InputBox";
+import { Separator } from "./ui/separator";
+import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
+import { range } from "@/lib/utils";
+import { addSession } from "@/app/actions";
 
 const getSpeceficWorkout = async (wid: string) => {
     const { data, error } = await supabase
@@ -13,12 +19,26 @@ const getSpeceficWorkout = async (wid: string) => {
 };
 
 const RecordSessionSkeleton = () => {
-    return <div></div>;
+    return (
+        <div>
+            <Skeleton className="w-[300px] h-[40px]" />
+            <div>
+                <Skeleton className="w-[200px] h-[40px]" />
+                {range(3).map((value) => (
+                    <Skeleton key={value} className="w-[500px] h-[500px]" />
+                ))}
+            </div>
+        </div>
+    );
 };
 
 const RecordSession = async ({ wid }: { wid: string }) => {
     if (wid === "") {
-        return <div>No data here</div>;
+        return (
+            <div className="mt-8 px-7 text-2xl">
+                Choose a workout to start recording your session
+            </div>
+        );
     }
 
     const workoutData = await getSpeceficWorkout(wid);
@@ -26,13 +46,28 @@ const RecordSession = async ({ wid }: { wid: string }) => {
 
     return (
         <div className="mt-8 px-7">
-            <h2 className="text-2xl font-semibold">{workoutData.name}</h2>
-            <h4 className="text-xl font-light">{workoutData.description || null}</h4>
-            {exercises.map((exer: any[]) => (
-                <p key={exer[0]}>
-                    {exer[0]} {exer[1]}
-                </p>
-            ))}
+            <h2 className="text-2xl font-semibold underline">
+                {workoutData.name}
+            </h2>
+            <h4 className="text-xl font-light mb-5">
+                {workoutData.description || null}
+            </h4>
+            <form
+                action={addSession}
+            >
+                <input type="hidden" value={wid} name="wid" />
+                {exercises.map((exer: any[], index: number) => (
+                    <>
+                        <InputBox key={index} exercise={exer} />
+                        {index !== exercises.length - 1 && (
+                            <Separator className="mb-5" />
+                        )}
+                    </>
+                ))}
+                {/* TODO: clear button */}
+                <Button variant="secondary">Clear</Button>
+                <Button type="submit">Submit</Button>
+            </form>
         </div>
     );
 };

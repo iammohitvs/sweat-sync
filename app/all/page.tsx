@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
-import { addData } from '../actions'
+import { addSession } from '../actions'
 
 const SessionsPage = () => {
   return (
-    <form action={addData}>
+    <form action={addSession}>
       <Button type='submit'>
         jnefwkewjn
       </Button>

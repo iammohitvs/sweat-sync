@@ -18,7 +18,6 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-    useParams,
     usePathname,
     useRouter,
     useSearchParams,
@@ -63,15 +62,15 @@ const ComboBox = ({
                     {value
                         ? workouts.find((workout) => workout.name === value)
                               ?.name
-                        : "Select framework..."}
+                        : "Select workout..."}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[300px] p-0">
                 <Command>
-                    <CommandInput placeholder="Search framework..." />
+                    <CommandInput placeholder="Select workout..." />
                     <CommandList>
-                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandEmpty>No workout with this name.</CommandEmpty>
                         <CommandGroup>
                             {workouts.map((workout) => (
                                 <CommandItem
