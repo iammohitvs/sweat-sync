@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import { range } from "@/lib/utils";
 import { addSession } from "@/app/actions";
+import SubmitButton from "./SubmitButton";
 
 const getSpeceficWorkout = async (wid: string) => {
     const { data, error } = await supabase
@@ -32,7 +33,7 @@ const RecordSessionSkeleton = () => {
     );
 };
 
-const RecordSession = async ({ wid }: { wid: string }) => {
+const RecordSessionMain = async ({ wid }: { wid: string }) => {
     if (wid === "") {
         return (
             <div className="mt-8 px-7 text-2xl">
@@ -52,9 +53,7 @@ const RecordSession = async ({ wid }: { wid: string }) => {
             <h4 className="text-xl font-light mb-5">
                 {workoutData.description || null}
             </h4>
-            <form
-                action={addSession}
-            >
+            <form action={addSession}>
                 <input type="hidden" value={wid} name="wid" />
                 {exercises.map((exer: any[], index: number) => (
                     <>
@@ -66,9 +65,25 @@ const RecordSession = async ({ wid }: { wid: string }) => {
                 ))}
                 {/* TODO: clear button */}
                 <Button variant="secondary">Clear</Button>
-                <Button type="submit">Submit</Button>
+                <SubmitButton
+                    toastDetails={{
+                        title: "Session Deatils added",
+                        description:
+                            "Vivit the all sessions page to view you submitted workout session",
+                    }}
+                >
+                    Submit
+                </SubmitButton>
             </form>
         </div>
+    );
+};
+
+const RecordSession = ({ wid }: { wid: string }) => {
+    return (
+        <Suspense fallback={<RecordSessionSkeleton />}>
+            <RecordSessionMain wid={wid} />
+        </Suspense>
     );
 };
 

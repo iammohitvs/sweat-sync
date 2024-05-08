@@ -2,8 +2,11 @@ import ComboBox from "@/components/ComboBox";
 import RecordSession from "@/components/RecordSession";
 import { supabase } from "@/lib/supabase";
 import React from "react";
+import { unstable_noStore as noStore } from "next/cache";
 
 const getWorkouts = async () => {
+    noStore()
+    
     const { data, error } = await supabase.from("workouts").select("id, name");
 
     if (error) throw new Error("Problems while getting workout names");

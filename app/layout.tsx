@@ -3,6 +3,7 @@ import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/toaster";
 
 const josephineSans = Josefin_Sans({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
                 <body className={`${josephineSans.className}`}>
                     <Header />
                     <main className="mx-6 md:mx-10 my-10">{children}</main>
+                    <Toaster />
                 </body>
             </html>
         </ClerkProvider>

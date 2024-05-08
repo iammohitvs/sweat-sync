@@ -3,45 +3,50 @@
 import { supabase } from "@/lib/supabase";
 import { range } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export async function addSession(formData: FormData) {
     const wid = formData.get("wid");
 
-    const exercises = await supabase
+    const { data: retreivalData, error: RetreivalError } = await supabase
         .from("workouts")
         .select("exercises")
         .eq("id", wid);
 
-    let sessionDetails = [];
+    if (RetreivalError)
+        throw new Error("Something went wrong gettin the exercise data");
 
-    Object.entries(exercises.data[0].exercises).map(
-        ([exercise, totalSets], index) => {
-            range(1, totalSets + 1).map((value) => {
-                sessionDetails = [
-                    ...sessionDetails,
+    const exercises = Object.entries(retreivalData[0].exercises); 
+
+    let sessionDetails: any[] = [];
+
+    exercises.map(([exercise, totalSets], _) => {
+        range(1, Number(totalSets) + 1).map((value) => {
+            sessionDetails = [
+                ...sessionDetails,
+                [
+                    exercise,
                     [
-                        exercise,
-                        [
-                            Number(formData.get(`${exercise}-${value}-weight`)),
-                            Number(formData.get(`${exercise}-${value}-reps`)),
-                        ],
+                        Number(formData.get(`${exercise}-${value}-weight`)),
+                        Number(formData.get(`${exercise}-${value}-reps`)),
                     ],
-                ];
-            });
-        }
-    );
+                ],
+            ];
+        });
+    });
 
-    const {data, error} = await supabase
-    .from("sessions")
-    .insert({
-        exercises: sessionDetails,
-        workout_id: wid,
-    })
-    .select()
+    const { data: insertionData, error: insertionError } = await supabase
+        .from("sessions")
+        .insert({
+            exercises: sessionDetails,
+            workout_id: wid,
+        })
+        .select();
 
-    if(error) throw new Error("Something went wrong while adding a session")
+    if (insertionError)
+        throw new Error("Something went wrong while adding a session");
 
-    console.log(data)
+    return redirect("/");
 }
 
 /* export async function addData(formData: FormData) {

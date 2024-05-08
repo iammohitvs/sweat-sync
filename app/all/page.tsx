@@ -4,7 +4,7 @@ import { addSession } from '../actions'
 
 const SessionsPage = () => {
   return (
-    <form action={addSession}>
+    <form action="">
       <Button type='submit'>
         jnefwkewjn
       </Button>

@@ -5,8 +5,11 @@ import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { supabase } from "@/lib/supabase";
+import { unstable_noStore as noStore } from "next/cache";
 
 const getAllWorkouts = async () => {
+    noStore();
+
     const user = await currentUser();
     const { data, error } = await supabase
         .from("workouts")
@@ -24,12 +27,16 @@ const getAllWorkouts = async () => {
 const WorkoutsPage = async () => {
     const data = await getAllWorkouts();
 
-    if (!data.length) return (
-        <h1 className="my-10 mx-auto text-2xl text-primary">
-            No Workouts Found. Go ahead and{" "}
-            <Link href="/create" className="underline">create one</Link>.
-        </h1>
-    );
+    if (!data.length)
+        return (
+            <h1 className="my-10 mx-auto text-2xl text-primary">
+                No Workouts Found. Go ahead and{" "}
+                <Link href="/create" className="underline">
+                    create one
+                </Link>
+                .
+            </h1>
+        );
 
     return (
         <section id="workouts-section">
