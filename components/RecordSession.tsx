@@ -36,7 +36,7 @@ const RecordSessionSkeleton = () => {
 const RecordSessionMain = async ({ wid }: { wid: string }) => {
     if (wid === "") {
         return (
-            <div className="mt-8 px-7 text-2xl">
+            <div className="mt-8 md:px-7 text-2xl">
                 Choose a workout to start recording your session
             </div>
         );
@@ -46,7 +46,7 @@ const RecordSessionMain = async ({ wid }: { wid: string }) => {
     const exercises = Object.entries(workoutData.exercises);
 
     return (
-        <div className="mt-8 px-7">
+        <div className="mt-8 md:px-7">
             <h2 className="text-2xl font-semibold underline">
                 {workoutData.name}
             </h2>

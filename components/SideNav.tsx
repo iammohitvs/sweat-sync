@@ -27,7 +27,7 @@ const SideNav = () => {
                     <Menu size={32} />
                 </SheetTrigger>
                 <SheetContent className="py-14">
-                    <SheetHeader className="mb-8">
+                    <SheetHeader className="mb-4">
                         <SheetTitle className="text-2xl font-bold mx-2">
                             Navigate Sweat Sync
                         </SheetTitle>

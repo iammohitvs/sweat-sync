@@ -21,7 +21,7 @@ const getAllWorkouts = async () => {
             "Something went wrong. Couldnt retreive your workouts."
         );
 
-    return data;
+    return data.reverse();
 };
 
 const WorkoutsPage = async () => {
@@ -53,6 +53,7 @@ const WorkoutsPage = async () => {
                 {data.map((workout) => (
                     <Workoutcard
                         key={workout.id}
+                        wid={workout.id}
                         cardTitle={workout.name}
                         exercises={workout.exercises}
                         cardDescription={workout.description || null}
