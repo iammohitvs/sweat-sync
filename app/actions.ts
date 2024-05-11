@@ -7,7 +7,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function addSession(formData: FormData) {
+    const user = await currentUser();
+
     const wid = formData.get("wid");
+    const workoutName = formData.get("workoutName");
 
     const { data: retreivalData, error: RetreivalError } = await supabase
         .from("workouts")
@@ -15,32 +18,40 @@ export async function addSession(formData: FormData) {
         .eq("id", wid);
 
     if (RetreivalError)
-        throw new Error("Something went wrong gettin the exercise data");
+        throw new Error("Something went wrong getting the exercise data");
 
     const exercises = Object.entries(retreivalData[0].exercises);
 
-    let sessionDetails: any[] = [];
+    let sessionDetails: [string, any[]][] = [];
+
+    /* 
+        [
+            [exerName, [[1, 12], [2, 12], [3, 12],]],
+        ]
+
+        Object.fromEntries the above array.
+    */
 
     exercises.map(([exercise, totalSets], _) => {
+        let sessionValues: [number, number][] = [];
+
         range(1, Number(totalSets) + 1).map((value) => {
-            sessionDetails = [
-                ...sessionDetails,
-                [
-                    exercise,
-                    [
-                        Number(formData.get(`${exercise}-${value}-weight`)),
-                        Number(formData.get(`${exercise}-${value}-reps`)),
-                    ],
-                ],
-            ];
+            sessionValues.push([
+                Number(formData.get(`${exercise}-${value}-weight`)),
+                Number(formData.get(`${exercise}-${value}-reps`)),
+            ]);
         });
+
+        sessionDetails.push([exercise, sessionValues]);
     });
 
     const { data: insertionData, error: insertionError } = await supabase
         .from("sessions")
         .insert({
-            exercises: sessionDetails,
+            workout_name: workoutName,
+            exercises: Object.fromEntries(sessionDetails),
             workout_id: wid,
+            user_id: user?.id || null,
         })
         .select();
 
@@ -94,30 +105,23 @@ export async function deleteWorkout(formData: FormData) {
         .eq("id", wid)
         .select();
 
-    console.log(data);
+    if (error)
+        throw new Error("A problem occured trying to delete your workout");
 
     return revalidatePath("/workouts");
 }
 
-/* export async function addData(formData: FormData) {
-    const user = await currentUser();
+export async function deleteSession(formData: FormData) {
+    const sessionId = formData.get("session-id");
 
     const { data, error } = await supabase
-        .from("workouts")
-        .select("*")
-        .eq("id", "23b3101e-8e7a-4121-aaed-f4ad81e961d8");
+        .from("sessions")
+        .delete()
+        .eq("id", sessionId)
+        .select();
 
-    if (error) {
-        console.log(error);
-        throw new Error("something went wrong");
-    }
+    if (error)
+        throw new Error("A problem occured trying to delete your session");
 
-    const finalData = Object.entries(data[0].exercises).map(
-        ([weight, reps]) => {
-            console.log(weight, reps);
-        }
-    );
-
-    console.log(data);
-    return;
-} */
+    return revalidatePath("/all");
+}

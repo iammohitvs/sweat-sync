@@ -28,6 +28,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { deleteWorkout } from "@/app/actions";
+import Link from "next/link";
 
 type WorkoutCardProps = {
     wid: string;
@@ -83,27 +84,35 @@ const Workoutcard = ({
                             <Trash2 size={20} color="red" />
                         </Button>
                     </DialogTrigger>
-                    <Button>
-                        <SquarePen size={20} />
+                    <Button asChild>
+                        <Link href="/edit">
+                            <SquarePen size={20} />
+                        </Link>
                     </Button>
                 </CardFooter>
                 <DialogContent>
                     <DialogHeader>
                         <DialogHeader>
-                            Are you sure you want to delete this workout
+                            <DialogTitle>
+                                Are you sure you want to delete this workout
+                            </DialogTitle>
+                            <DialogDescription>
+                                You cannot reverse this decision
+                            </DialogDescription>
                         </DialogHeader>
-                        <DialogDescription>
-                            You cannot reverse this decision
-                        </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
                         <DialogClose>
-                            <Button type="button" variant="secondary">Cancel</Button>
+                            <Button type="button" variant="secondary">
+                                Cancel
+                            </Button>
                         </DialogClose>
                         <DialogClose>
                             <form action={deleteWorkout}>
                                 <input type="hidden" name="wid" value={wid} />
-                                <Button type="submit" variant="destructive">Confirm</Button>
+                                <Button type="submit" variant="destructive">
+                                    Confirm
+                                </Button>
                             </form>
                         </DialogClose>
                     </DialogFooter>

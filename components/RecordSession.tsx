@@ -16,19 +16,14 @@ const getSpeceficWorkout = async (wid: string) => {
 
     if (error)
         throw new Error("Something went wrong fetching a specefic workout");
+
     return data[0];
 };
 
 const RecordSessionSkeleton = () => {
     return (
         <div>
-            <Skeleton className="w-[300px] h-[40px]" />
-            <div>
-                <Skeleton className="w-[200px] h-[40px]" />
-                {range(3).map((value) => (
-                    <Skeleton key={value} className="w-[500px] h-[500px]" />
-                ))}
-            </div>
+            <Skeleton className="w-[360px] h-[40px]" />
         </div>
     );
 };
@@ -55,16 +50,20 @@ const RecordSessionMain = async ({ wid }: { wid: string }) => {
             </h4>
             <form action={addSession}>
                 <input type="hidden" value={wid} name="wid" />
+                <input
+                    type="hidden"
+                    value={workoutData.name}
+                    name="workoutName"
+                />
                 {exercises.map((exer: any[], index: number) => (
-                    <>
-                        <InputBox key={index} exercise={exer} />
+                    <div key={index}>
+                        <InputBox exercise={exer} />
                         {index !== exercises.length - 1 && (
                             <Separator className="mb-5" />
                         )}
-                    </>
+                    </div>
                 ))}
                 {/* TODO: clear button */}
-                <Button variant="secondary">Clear</Button>
                 <SubmitButton
                     toastDetails={{
                         title: "Session Deatils added",
