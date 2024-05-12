@@ -16,10 +16,10 @@ const getAllSessions = async () => {
 
     if (error)
         throw new Error(
-            "Something went wrond trying to retreive all the users sessions"
+            "Something went wrong trying to retreive all the users sessions"
         );
 
-    return data;
+    return data.reverse();
 };
 
 const SessionsPage = async () => {
@@ -30,7 +30,7 @@ const SessionsPage = async () => {
             <h1 className="text-3xl font-semibold">All your sessions</h1>
             <div className="mt-10 grid gris-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                 {sessionsData.map((session) => (
-                    <SessionCard session={session} key={session.id} />
+                    <SessionCard session={session} key={session.id} withDelete={true}/>
                 ))}
             </div>
         </section>

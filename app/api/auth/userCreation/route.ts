@@ -1,6 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { PushWorkout, PullWorkout, LegsWorkout } from "@/lib/constants";
 
 export async function GET(request: Request) {
     const user = await currentUser();
@@ -15,7 +16,7 @@ export async function GET(request: Request) {
         .eq("id", user?.id);
 
     if (error) {
-        throw new Error("Failed at stage 1");
+        throw new Error("Couldn't verify users existence in database");
     }
 
     if (!data?.length) {
@@ -33,9 +34,34 @@ export async function GET(request: Request) {
             .select();
 
         if (error) {
-            throw new Error("Failed at stage 2");
+            throw new Error("Couldn't add user to database");
         }
     }
 
-    return NextResponse.redirect(new URL("/", request.url));
+    if (!data?.length) {
+        const { data, error } = await supabase
+            .from("workouts")
+            .insert([
+                {
+                    ...PushWorkout,
+                    user_id: user?.id,
+                },
+                {
+                    ...PullWorkout,
+                    user_id: user?.id,
+                },
+                {
+                    ...LegsWorkout,
+                    user_id: user?.id,
+                },
+            ])
+            .select();
+
+        if (error)
+            throw new Error(
+                "Something went wrong trying to add the 3 default workouts"
+            );
+    }
+
+    return NextResponse.redirect(new URL("/docs", request.url));
 }

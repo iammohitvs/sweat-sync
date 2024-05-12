@@ -50,9 +50,9 @@ const SideNav = () => {
                                         <SheetClose asChild>
                                             <li
                                                 className={cn(
-                                                    "px-4 py-2 hover:bg-secondary flex flex-row gap-4 justify-start items-center",
+                                                    "px-4 py-2 flex flex-row gap-4 justify-start items-center",
                                                     {
-                                                        "text-primary":
+                                                        "bg-primary text-white rounded-lg hover:bg-primary":
                                                             pathname.includes(
                                                                 path.path
                                                             ),

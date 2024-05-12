@@ -24,21 +24,25 @@ import { Separator } from "./ui/separator";
 import { deleteSession } from "@/app/actions";
 
 type sessionCardProps = {
-    session: {
-        id: number;
-        created_at: string;
-        exercises: any;
-        workout_id: string;
-        workout_name: string;
-        user_id: string;
-    };
+    session:
+        | {
+              id: number;
+              created_at: string;
+              exercises: any;
+              workout_id: string;
+              workout_name: string;
+              user_id: string;
+          }
+        | any[];
+
+    withDelete: boolean;
 };
 
-const SessionCard = ({ session }: sessionCardProps) => {
+const SessionCard = ({ session, withDelete }: sessionCardProps) => {
     const sessionDetailsArray = Object.entries(session.exercises);
 
     return (
-        <Card className="h-min">
+        <Card className="h-min max-w-[600px]">
             <CardHeader>
                 <CardTitle>{session.workout_name}</CardTitle>
             </CardHeader>
@@ -68,12 +72,16 @@ const SessionCard = ({ session }: sessionCardProps) => {
             </CardContent>
             <Dialog>
                 <CardFooter className="flex flex-col justify-between items-start gap-5">
-                    <p className="text-primary">{session.created_at.slice(0, 10)}</p>
-                    <DialogTrigger asChild>
-                        <Button variant="secondary">
-                            <Trash2 size={20} color="red" />
-                        </Button>
-                    </DialogTrigger>
+                    <p className="text-primary">
+                        {session.created_at.slice(0, 10)}
+                    </p>
+                    {withDelete && (
+                        <DialogTrigger asChild>
+                            <Button variant="secondary">
+                                <Trash2 size={20} color="red" />
+                            </Button>
+                        </DialogTrigger>
+                    )}
                 </CardFooter>
                 <DialogContent>
                     <DialogHeader>
@@ -94,7 +102,11 @@ const SessionCard = ({ session }: sessionCardProps) => {
                         </DialogClose>
                         <DialogClose>
                             <form action={deleteSession}>
-                                <input type="hidden" name="session-id" value={session.id} />
+                                <input
+                                    type="hidden"
+                                    name="session-id"
+                                    value={session.id}
+                                />
                                 <Button type="submit" variant="destructive">
                                     Confirm
                                 </Button>

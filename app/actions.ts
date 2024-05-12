@@ -47,12 +47,14 @@ export async function addSession(formData: FormData) {
 
     const { data: insertionData, error: insertionError } = await supabase
         .from("sessions")
-        .insert({
-            workout_name: workoutName,
-            exercises: Object.fromEntries(sessionDetails),
-            workout_id: wid,
-            user_id: user?.id || null,
-        })
+        .insert([
+            {
+                workout_name: workoutName,
+                exercises: Object.fromEntries(sessionDetails),
+                workout_id: wid,
+                user_id: user?.id || null,
+            },
+        ])
         .select();
 
     if (insertionError)
