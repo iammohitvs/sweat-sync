@@ -2,7 +2,7 @@ import React from 'react'
 
 const EditWorkoutPage = () => {
   return (
-    <div>Coming soon.....</div>
+    <div className='text-3xl'>Coming soon...</div>
   )
 }
 

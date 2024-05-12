@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
-import { randomAction } from "../actions";
 
 const DocsPage = () => {
     return (
@@ -53,7 +52,8 @@ const DocsPage = () => {
                 stronger and build the muscle that your working hard for.
             </p>
             <p className="text-xl">
-                Give it a name. A description as well, maybe something that motivates you to hit your pr!
+                Give it a name. A description as well, maybe something that
+                motivates you to hit your pr!
             </p>
             <p className="text-xl">
                 All your workouts can be viewed inside the{" "}
@@ -101,7 +101,7 @@ const DocsPage = () => {
                 <li>
                     Raise an issue on{" "}
                     <Link
-                        href=""
+                        href="https://github.com/iammohitvs/sweat-sync"
                         className="text-primary hover:font-semibold transition-all underline"
                     >
                         github
@@ -114,12 +114,6 @@ const DocsPage = () => {
                 And that's it! Have fun with the app, and gain tons of muscle 💪
                 .
             </p>
-
-            <form action={randomAction}>
-                <Button>
-                    click
-                </Button>
-            </form>
         </div>
     );
 };
