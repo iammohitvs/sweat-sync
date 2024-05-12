@@ -32,7 +32,7 @@ const DocsPage = () => {
             </p>
 
             <h4 className="text-xl font-bold text-primary">
-                The navigatioon menu is your map. Use it to explore all the
+                The navigation menu is your map. Use it to explore all the
                 features we have to offer. It can be accessed using the
                 hamburger on the top right of your screen.
             </h4>
@@ -41,7 +41,7 @@ const DocsPage = () => {
             <p className="text-xl">
                 We provide all new users with three workouts out of the box. The
                 famous Push-Pull-Legs split. Feel free to use them, or delete
-                them to add other workouts that are better fit for you.
+                them to add other workouts that are a better fit for you.
             </p>
             <p className="text-xl">
                 You can also click on the big green "Create Workout" button and
@@ -49,11 +49,11 @@ const DocsPage = () => {
                 technical like "Chest Day", or something funny like "Why do I
                 train legs 😭". The main goal of our app is to provide
                 flexibility in building and managing your workouts, to get
-                stronger and build the muscle that your working hard for.
+                stronger and build the muscle that you're working hard for.
             </p>
             <p className="text-xl">
                 Give it a name. A description as well, maybe something that
-                motivates you to hit your pr!
+                motivates you to hit your PR!
             </p>
             <p className="text-xl">
                 All your workouts can be viewed inside the{" "}
@@ -82,7 +82,7 @@ const DocsPage = () => {
             </p>
             <p className="text-xl">
                 Recording session has never been easier. Just go to the Record a
-                session page from our navigation menu adn chose one of your
+                session page from our navigation menu and chose one of your
                 workouts. Wait a second for it to load and start filling in the
                 data.
             </p>
