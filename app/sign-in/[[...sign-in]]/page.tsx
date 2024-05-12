@@ -4,7 +4,7 @@ import React from "react";
 const SignINPage = () => {
     return (
         <div className="mx-auto mt-10 w-fit">
-            <SignIn path="/sign-in" />;
+            <SignIn path="/sign-in" />
         </div>
     );
 };

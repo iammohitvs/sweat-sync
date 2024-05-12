@@ -4,11 +4,14 @@ import { supabase } from "@/lib/supabase";
 import React from "react";
 import { unstable_noStore as noStore } from "next/cache";
 import SessionCard from "@/components/SessionCard";
+import { currentUser } from "@clerk/nextjs/server";
 
 const getWorkouts = async () => {
+    const user = await currentUser();
+    
     noStore();
 
-    const { data, error } = await supabase.from("workouts").select("id, name");
+    const { data, error } = await supabase.from("workouts").select("id, name").eq("user_id", user?.id);
 
     if (error) throw new Error("Problems while getting workout names");
     return data;
