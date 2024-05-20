@@ -85,7 +85,7 @@ const Workoutcard = ({
                         </Button>
                     </DialogTrigger>
                     <Button asChild>
-                        <Link href="/edit">
+                        <Link href={`/edit/${wid}`}>
                             <SquarePen size={20} />
                         </Link>
                     </Button>

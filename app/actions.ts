@@ -127,3 +127,33 @@ export async function deleteSession(formData: FormData) {
 
     return revalidatePath("/all");
 }
+
+export async function updateWorkout(formData: FormData) {
+    const wid = formData.get("wid");
+    const name = formData.get("name") || formData.get("name-default");
+    const description =
+        formData.get("description") || formData.get("description-default");
+    const numberOfExercises = formData.get("numberOfExercises");
+    let exercisesArray = [];
+
+    exercisesArray = range(Number(numberOfExercises)).map((value) => {
+        return [
+            formData.get(`name-${value}`) ||
+                formData.get(`name-default-${value}`),
+            formData.get(`set-${value}`),
+        ];
+    });
+
+    const { data, error } = await supabase
+        .from("workouts")
+        .update({
+            name: name,
+            description: description,
+            exercises: Object.fromEntries(exercisesArray),
+        })
+        .eq("id", wid)
+        .select("*");
+
+    if (error)
+        throw new Error("SOmething went wrong trying to update your workout")
+}

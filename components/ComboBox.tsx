@@ -17,11 +17,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-    usePathname,
-    useRouter,
-    useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const ComboBox = ({
     workoutNames,
@@ -77,18 +73,14 @@ const ComboBox = ({
                                     key={workout.name}
                                     value={workout.name}
                                     onSelect={(currentValue) => {
-                                        setValue(
-                                            currentValue === value
-                                                ? ""
-                                                : currentValue
-                                        );
-                                        setOpen(false);
+                                        setValue(currentValue);
                                         router.push(
                                             `${pathname}?${createQueryString(
                                                 "wid",
                                                 workout.id
                                             )}`
                                         );
+                                        setOpen(false);
                                     }}
                                 >
                                     <Check
