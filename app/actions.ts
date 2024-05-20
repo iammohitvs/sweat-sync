@@ -155,5 +155,7 @@ export async function updateWorkout(formData: FormData) {
         .select("*");
 
     if (error)
-        throw new Error("SOmething went wrong trying to update your workout")
+        throw new Error("SOmething went wrong trying to update your workout");
+
+    return redirect("/workouts");
 }
